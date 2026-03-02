@@ -1,0 +1,42 @@
+{
+  "name": "Content Creation Pipeline",
+  "nodes": [
+    {
+      "name": "Perplexity Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [250, 300],
+      "parameters": {
+        "url": "https://api.perplexity.ai/chat/completions",
+        "method": "POST"
+      }
+    },
+    {
+      "name": "ChatGPT Script",
+      "type": "n8n-nodes-base.openAi",
+      "position": [450, 300]
+    },
+Add n8n workflow for content creation pipeline      "name": "HeyGen Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [650, 300],
+      "parameters": {
+        "url": "https://api.heygen.com/v1/video.generate"
+      }
+    },
+    {
+      "name": "YouTube Upload",
+      "type": "n8n-nodes-base.youtube",
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Perplexity Research": {
+      "main": [[{"node": "ChatGPT Script", "type": "main", "index": 0}]]
+    },
+    "ChatGPT Script": {
+      "main": [[{"node": "HeyGen Video", "type": "main", "index": 0}]]
+    },
+    "HeyGen Video": {
+      "main": [[{"node": "YouTube Upload", "type": "main", "index": 0}]]
+    }
+  }
+}
